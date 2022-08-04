@@ -13,17 +13,17 @@ jt:
 	.global assemSound
 
 assemSound:
-	sub #2, r1
-	mov #0, 0(r12)
+	sub #2, r1.  ; stack
+	mov #0, 0(r12) ;case#
 
-	cmp #4, r12
-	jhs end
+	cmp #4, r12 ;r12 - 4 
+	jhs end  ;jump to end if higher or equal to 4
 
-	cmp #0, r12		;del
-	jl end
+	cmp #0, r12		;r12 - 0
+	jl end ;jump to end if less than 0
 	
-	add r12, r12
-	mov jt(r12), r0
+	add r12, r12. ; get offset becuase each entry is 2 bytes
+	mov jt(r12), r0. ;moves value we want to PC to be read
 
 case0:
 	mov #400, 0(r1)
@@ -55,13 +55,8 @@ case3:
 
 	
 end:
-	/*
-	r1 [*p(800)][][][]
-	r1[0] -> r12 (*pointer(int 800))
-	buzzer_set_period(r12)
-	*/
 	add #2, r1   	;r1 stack pointer 
-	pop r0		;reset program counter 
+	pop r0		;pop stack 
 
 	
 
