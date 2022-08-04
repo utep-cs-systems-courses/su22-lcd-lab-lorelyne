@@ -15,15 +15,15 @@
 
 short redrawScreen = 1;
 
-//direction of red cube
+//up/down direction of purple cube
 u_char U_D = 30;
 u_char nextU_D = 30;
 
-//left right direction
+//left/right direction of purple cube
 u_char L_R = 30;
 u_char nextL_R = 30;
 
-//cyan collison test
+//start position of pixel
 u_char a = 10;
 u_char aNex=10;
 u_char b = 10;
@@ -86,26 +86,26 @@ void StartGame(){
 
       if(str[0]=='0'){
 	assemSound(1);  //play buzzer
-	nextU_D +=Speed; //up/down (adding) means go down
+	nextU_D +=Speed; // (adding) means go down
 	sleep =1;
 	t=0;
       }
       if(str[1]=='1'){
 	assemSound(1); //play buzzer
-	nextU_D -=Speed; //up/down (subtracting) means go up
+	nextU_D -=Speed; // (subtracting) means go up
 	sleep =1;
 	t=0;
     
       }
       if(str[2]=='2'){
 	assemSound(2); //play buzzer
-	nextL_R -=Speed;	//left/right (subtracting) means go left
+	nextL_R -=Speed; // (subtracting) means go left
 	sleep =1;
 	t=0;
       }
       if(str[3]=='3'){
 	assemSound(3);//play buzzer
-    nextL_R +=Speed; //left/right (subtracting) means go left
+    nextL_R +=Speed; // (adding) means go right
 	sleep =1;
 	t=0;
   
@@ -119,23 +119,23 @@ void StartGame(){
       or_sr(0x10);		/**< CPU OFF */
     }
     
-    //we redraw screen here, update cube location and pos
+    //we redraw screen here, update cube location and position
     if (redrawScreen && sleep==1) {
       redrawScreen = 0;
 
-      drawString11x16(30,60,"Cubix", COLOR_BLUE, COLOR_BLACK);
+      drawString11x16(30,60,"Cubix", COLOR_BLUE, COLOR_BLACK); //Title of game
 
-      fillRectangle(L_R,U_D,10,10, COLOR_BLACK);
-      fillRectangle(nextL_R,nextU_D,10,10, COLOR_PURPLE);
+      fillRectangle(L_R,U_D,10,10, COLOR_BLACK); //Update the pre position of cube to black
+      fillRectangle(nextL_R,nextU_D,10,10, COLOR_PURPLE); //update the current position of cube to purple
    
-      drawPixel(aNex,aNex,COLOR_RED);
+      drawPixel(aNex,aNex,COLOR_RED); //draw deathly pixel
 
-      drawString5x7(20,20,str,COLOR_WHITE, COLOR_BLACK);
+      drawString5x7(20,20,str,COLOR_WHITE, COLOR_BLACK); //switch being pushed
       
       L_R = nextL_R;	      
       U_D = nextU_D;
      
-      //this is for the collsions with only dots
+      //this is for the collsion, if purple cube lands on deathly pixel, display "Game Over"
       if(aNex > nextL_R && aNex < nextL_R + 10 ){
 	if( aNex > nextU_D && aNex < nextU_D + 10){
 	  drawString5x7(30,90,"Game Over",COLOR_RED,COLOR_BLACK);
