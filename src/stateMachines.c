@@ -3,49 +3,27 @@
 #include "led.h"
 #include "buzzer.h"
 
-static char count = 0;
+static char state = 0;
 
-void countToThree(){
-
-  switch(count){
+void sound(){
+  
+  switch(state){
   case 0:
-   buzzer_set_period(1000);
-   red_on = 0;
-   green_on = 0;
-   count = 1;
-   break;
-
-  case 1:
-   buzzer_set_period(800);
-   red_on = 1;
-   green_on = 0;
-   count = 2;
-   break;
-
-  case 2:
-   buzzer_set_period(600);
-   red_on = 0;
-   green_on = 1;
-   count = 3;
-   break;
-
-  case 3:
-   buzzer_set_period(400);
-   red_on = 1;
-   green_on = 1;
-   count = 0;
-   break;
-  }
-  led_changed = 1;
-  led_update();
-}
-
-void rest(){
-  buzzer_set_period(0);
-  count = 0;
-  red_on = 0;
-  green_on = 0;
-  led_changed = 1;
-  led_update();
-}
+    buzzer_set_period(700);
+    state = 1;
+    break;
     
+  case 1:
+    buzzer_set_period(0);
+    state = 0;
+    break;
+
+  }
+  led_changed = 1; //we update the lights after each break
+  led_update();
+  
+}
+
+void noise (){
+  buzzer_set_period(1000);
+}

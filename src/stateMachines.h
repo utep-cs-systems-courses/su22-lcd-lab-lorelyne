@@ -2,7 +2,10 @@
 #define stateMachine_included
 
 static char count;
-void countToThree();
-void rest();
 
-#endif
+void sound();
+void noise();
+
+void reset();
+
+#endif // included
